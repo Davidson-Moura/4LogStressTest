@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "s3Kl+HJIi3k=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\david\\source\\repos\\4LogStressTest\\4LogStressTest\\4LogStressTest.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\david\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

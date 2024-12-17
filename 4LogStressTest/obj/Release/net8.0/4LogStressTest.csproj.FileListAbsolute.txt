@@ -1,0 +1,17 @@
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\bin\Release\net8.0\4LogStressTest.exe
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\bin\Release\net8.0\4LogStressTest.deps.json
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\bin\Release\net8.0\4LogStressTest.runtimeconfig.json
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\bin\Release\net8.0\4LogStressTest.dll
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\bin\Release\net8.0\4LogStressTest.pdb
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\bin\Release\net8.0\Newtonsoft.Json.dll
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\4LogStressTest.csproj.AssemblyReference.cache
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\4LogStressTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\4LogStressTest.AssemblyInfoInputs.cache
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\4LogStressTest.AssemblyInfo.cs
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\4LogStressTest.csproj.CoreCompileInputs.cache
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\4LogStre.BBFFA8A2.Up2Date
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\4LogStressTest.dll
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\refint\4LogStressTest.dll
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\4LogStressTest.pdb
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\4LogStressTest.genruntimeconfig.cache
+C:\Users\david\source\repos\4LogStressTest\4LogStressTest\obj\Release\net8.0\ref\4LogStressTest.dll
