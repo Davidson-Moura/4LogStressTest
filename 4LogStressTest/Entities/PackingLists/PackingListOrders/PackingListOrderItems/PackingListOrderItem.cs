@@ -44,6 +44,8 @@ namespace Api.Domain.Entities.PackingLists.PackingListOrders.PackingListOrderIte
         internal void FillValues(DocumentLineSearchSBO line)
         {
             if(line is null) return;
+            ItemCode = line.ItemCode;
+            LineNum = line.LineNum;
             Quantity = line.Quantity ?? 0m;
             Price = line.Price ?? 0m;
             DiscPrcnt = line.DiscPrcnt ?? 0m;

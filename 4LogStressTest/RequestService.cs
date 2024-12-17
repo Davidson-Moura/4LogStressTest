@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.Text;
+﻿using System.Text;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace _4LogStressTest
 {
@@ -17,13 +18,17 @@ namespace _4LogStressTest
                 if (!string.IsNullOrEmpty(token)) client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
                 var result = client.GetStringAsync(uri).Result;
 
-                return JsonConvert.DeserializeObject<T>(result);
+                return JsonSerializer.Deserialize<T>(result);
             }
         }
-        public static R Post<T, R>(string uri, T data,
+        public static R Post<T, R>(string uri, T data, string token,
             string b1Session, string routeId) where T : class, new() where R : class, new()
         {
-            string jsonContent = JsonConvert.SerializeObject( data);
+            var jsonOptions = new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };
+            string jsonContent = JsonSerializer.Serialize(data, jsonOptions);
             using var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             using HttpClientHandler handler = new HttpClientHandler
@@ -32,25 +37,31 @@ namespace _4LogStressTest
                 ServerCertificateCustomValidationCallback = (message, certificate, chain, sslPolicyErrors) => true
             };
             handler.CookieContainer = new System.Net.CookieContainer();
-            if(!string.IsNullOrEmpty(b1Session))handler.CookieContainer.Add(new Uri(uri), new System.Net.Cookie("B1SESSION", b1Session, "/", ".example.com") { HttpOnly = true, Secure = true });
-            if(!string.IsNullOrEmpty(routeId)) handler.CookieContainer.Add(new Uri(uri), new System.Net.Cookie("ROUTEID", routeId, "/", ".example.com") { Secure = true });
+            if(!string.IsNullOrEmpty(b1Session))handler.CookieContainer.Add(new Uri(uri), new System.Net.Cookie("B1SESSION", b1Session) { HttpOnly = true, Secure = true });
+            if(!string.IsNullOrEmpty(routeId)) handler.CookieContainer.Add(new Uri(uri), new System.Net.Cookie("ROUTEID", routeId) { Secure = true });
 
             using HttpClient client = new HttpClient(handler);
 
+            if (!string.IsNullOrEmpty(token)) client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage response = client.PostAsync(uri, content).Result;
 
             if (response.IsSuccessStatusCode)
             {
                 string responseJson = response.Content.ReadAsStringAsync().Result;
 
-                var setCookies = response.Headers.GetValues("Set-Cookie");
-
-                foreach (var cookie in setCookies)
+                if (response.Headers.Contains("Set-Cookie"))
                 {
-                    Console.WriteLine($"Cookie recebido: {cookie}");
+                    var setCookies = response.Headers.GetValues("Set-Cookie");
+
+                    foreach (var cookie in setCookies)
+                    {
+                        Console.WriteLine($"Cookie recebido: {cookie}");
+                    }
                 }
 
-                var rs = JsonConvert.DeserializeObject<R>(responseJson);
+                if (string.IsNullOrEmpty(responseJson)) return null;
+
+                var rs = JsonSerializer.Deserialize<R>(responseJson);
                 return rs;
             }
             else
@@ -63,7 +74,7 @@ namespace _4LogStressTest
 
         public static SLLoginResponse LoginSL(string uri, SLLogin data)
         {
-            string jsonContent = JsonConvert.SerializeObject(data);
+            string jsonContent = JsonSerializer.Serialize(data);
             using var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             using HttpClientHandler handler = new HttpClientHandler
@@ -80,15 +91,15 @@ namespace _4LogStressTest
             {
                 string responseJson = response.Content.ReadAsStringAsync().Result;
 
-                var rs = JsonConvert.DeserializeObject<SLLoginResponse>(responseJson);
+                var rs = JsonSerializer.Deserialize<SLLoginResponse>(responseJson);
 
                 var setCookies = response.Headers.GetValues("Set-Cookie");
 
                 foreach (var cookie in setCookies)
                 {
                     var split = cookie.Split('=');
-                    if (split[0] == "B1SESSION") rs.B1SESSION = split[1];
-                    if (split[0] == "ROUTEID") rs.ROUTEID = split[1];
+                    if (split[0] == "B1SESSION") rs.B1SESSION = split[1].Split(';')[0];
+                    if (split[0] == "ROUTEID") rs.ROUTEID = split[1].Split(';')[0];
                 }
 
                 return rs;

@@ -48,7 +48,7 @@ namespace Api.Domain.Entities.PackingLists
         public string WithErrorInProcess { get; set; } = "N";
         public int? InvoicingUserID { get; set; }
         #region Props not in table
-        public PackingListStatusEnum StatusEnum { get { return (PackingListStatusEnum)StatusId; } set { StatusId = (int)value; } }
+        public PackingListStatusEnum StatusEnum { get { return (PackingListStatusEnum)(StatusId ??0); } set { StatusId = (int)value; } }
         public string StatusName { get; set; }
         public string VehicleName { get; set; }
         public string CarrierDriverName { get; set; }
@@ -62,7 +62,7 @@ namespace Api.Domain.Entities.PackingLists
         #endregion
         public List<PackingListOrder> Orders { get; set; } = new List<PackingListOrder>();
         public List<PackingListPaymentCarrier> CarrierPayments { get; set; } = new List<PackingListPaymentCarrier>();
-        public List<PackingListRoute> Routes { get; set; } = null;
+        public List<PackingListRoute> Routes { get; set; } = new List<PackingListRoute>();
         public List<PackingListEmployee> PackingListEmployees { get; set; } = new List<PackingListEmployee>();
         public PackingListFreight InternalFreight { get; set; }
 

@@ -9,7 +9,7 @@ namespace _4LogStressTest
 
         private static readonly string _user = "manager";
         private static readonly string _pwd = "Imagine01";
-        private static readonly string _company = "SBODemoBR";
+        private static readonly string _company = "SBODEMOBR";
 
         private static string _B1SESSION = "";
         private static string _ROUTEID = "";
@@ -24,19 +24,23 @@ namespace _4LogStressTest
             var doc = new OrderSL()
             {
                 CardCode = _cardCode,
+                BPL_IDAssignedToInvoice = 1,
+                DocDueDate = DateTime.Now,
                 DocumentLines = new List<DocumentLineSL>()
                 {
                     new DocumentLineSL()
                     {
                         ItemCode = _itemCode,
-                        Quantity = 3
+                        Quantity = 3,
+                        Price = 150,
+                        Usage = 12
                     }
                 }
             };
             
             var uri = string.Join('/', _apiUrl, "Orders");
 
-            var rs = RequestService.Post<OrderSL, OrderSL>(uri, doc, _B1SESSION, _ROUTEID);
+            var rs = RequestService.Post<OrderSL, OrderSL>(uri, doc, null, _B1SESSION, _ROUTEID);
         }
         private static void ValidateToken()
         {

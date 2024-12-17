@@ -77,15 +77,18 @@ namespace Api.Domain.Entities.PackingLists.PackingListOrders
             decimal itemsTotal = decimal.Zero;
             decimal netWeight = decimal.Zero;
 
-            Items.ForEach(x => {
-                currentLine = doc.DocumentLines.FirstOrDefault(y => y.LineNum == x.LineNum && y.ItemCode == x.ItemCode);
+            doc.DocumentLines.ForEach(currentLine => {
+                var x = new PackingListOrderItem();
                 x.FillValues(currentLine);
+                this.Items.Add(x);
 
-                freight += x.LineFreightTotal??0m;
-                itemsTotal += x.LineTotal??0m;
-                netWeight += x.Weight??0m;
+                freight += x.LineFreightTotal ?? 0m;
+                itemsTotal += x.LineTotal ?? 0m;
+                netWeight += x.Weight ?? 0m;
             });
+            if (currentLine is null) currentLine = doc.DocumentLines.FirstOrDefault();
             DocNum = doc.DocNum;
+            ObjTypeId = doc.ObjTypeId;
             TerritoryId = currentLine.Territory;
             DocDate = doc.DocDate;
             if(short.TryParse(doc.DocTime, out short shortDocTime)) DocTime = shortDocTime;
